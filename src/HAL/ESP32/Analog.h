@@ -51,7 +51,9 @@ void __toneStop(void * pvParameters)
   vTaskDelete(NULL);
 }
 
-__attribute__ ((weak)) void tone(uint8_t pin, unsigned int frequency, unsigned long duration = 0)
+// fix for ESP32, duration is not optional (2024/04/21:safubuki)
+// __attribute__ ((weak)) void tone(uint8_t pin, unsigned int frequency, unsigned long duration = 0)
+__attribute__ ((weak)) void tone(uint8_t pin, unsigned int frequency, unsigned long duration)
 {
   portENTER_CRITICAL(&__analogOutMux);
   int channel=__pwmAllocateChannel(pin);
